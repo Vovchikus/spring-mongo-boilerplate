@@ -1,6 +1,12 @@
 package com.project.home24.handler;
 
+import com.project.home24.controller.AccountController;
+import com.project.home24.dto.error.ErrorResponse;
 import com.project.home24.dto.error.ValidationError;
+import com.project.home24.exception.AccountNotFoundException;
+import com.project.home24.exception.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,7 +24,11 @@ import java.util.Locale;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
     private final MessageSource messageSource;
+    private final static String SERVER_ERROR_MESSAGE = "Service unavailable, we are fixing it. Please try again later";
 
     @Autowired
     public ControllerExceptionHandler(MessageSource messageSource) {
@@ -28,19 +38,43 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ValidationError processValidationError(MethodArgumentNotValidException ex) {
+    public ValidationError handleValidationErrors(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
 
         return processFieldErrors(fieldErrors);
     }
 
+    @ExceptionHandler({EntityNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleEntityNotFoundException(EntityNotFoundException ex) {
+        log.info(ex.getMessage());
+        return new ErrorResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler({AccountNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleAccountNotFoundException(AccountNotFoundException ex) {
+        log.info(ex.getMessage());
+        return new ErrorResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler({Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorResponse handleServerError(Exception ex) {
+        log.error(ex.getMessage());
+        return new ErrorResponse(SERVER_ERROR_MESSAGE);
+    }
+
     private ValidationError processFieldErrors(List<FieldError> fieldErrors) {
         ValidationError validationError = new ValidationError();
-        for (FieldError fieldError : fieldErrors) {
+        fieldErrors.forEach((fieldError -> {
             String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
             validationError.addFieldError(fieldError.getField(), localizedErrorMessage);
-        }
+        }));
         return validationError;
     }
 

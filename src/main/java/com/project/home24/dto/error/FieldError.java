@@ -1,6 +1,7 @@
 package com.project.home24.dto.error;
 
 public class FieldError {
+
     private final String field;
 
     private final String message;

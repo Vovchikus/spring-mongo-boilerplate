@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,32 +32,41 @@ public class EntityController {
         Entity entity = new Entity();
         entity.setTitle(entityRequest.getTitle());
         entity.setDescription(entityRequest.getDescription());
+        entity.setCreated(LocalDateTime.now());
         return entityRepository.insert(entity);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Entity getOne(@PathVariable("id") Long id) throws EntityNotFoundException {
+    public Entity getOne(@PathVariable("id") String id) throws EntityNotFoundException {
         Optional<Entity> opt = Optional.ofNullable(entityRepository.findOne(id));
         return opt.orElseThrow(() -> new EntityNotFoundException(id));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Entity> getAll() {
+    public List getAll() {
         return entityRepository.findAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Entity updateOne(@Valid @RequestBody EntityRequest entityRequest, @PathVariable("id") Long id)
+    public Entity updateOne(@Valid @RequestBody EntityRequest entityRequest, @PathVariable("id") String id)
             throws EntityNotFoundException {
         Optional<Entity> opt = Optional.ofNullable(entityRepository.findOne(id));
         Entity entity = opt.orElseThrow(() -> new EntityNotFoundException(id));
         entity.setDescription(entityRequest.getDescription());
         entity.setTitle(entityRequest.getTitle());
-        return entityRepository.save(entity);
+        entity.setUpdated(LocalDateTime.now());
+        entityRepository.save(entity);
+        return entity;
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{id}")
+    public void deleteOne(@PathVariable("id") String id) {
+        Optional<Entity> opt = Optional.ofNullable(entityRepository.findOne(id));
+        Entity entity = opt.orElseThrow(() -> new EntityNotFoundException(id));
+        entityRepository.delete(entity.getId());
+    }
 }

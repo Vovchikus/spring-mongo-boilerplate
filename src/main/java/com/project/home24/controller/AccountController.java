@@ -1,13 +1,11 @@
 package com.project.home24.controller;
 
-import com.project.home24.dto.account.CreateAccountRequest;
 import com.project.home24.dto.account.AccountResponse;
+import com.project.home24.dto.account.CreateAccountRequest;
 import com.project.home24.entity.Account;
 import com.project.home24.exception.AccountNotFoundException;
 import com.project.home24.repository.AccountRepository;
 import com.project.home24.service.AccountService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +16,6 @@ import java.util.Optional;
 
 @RestController
 public class AccountController {
-
-    private static final Logger log = LoggerFactory.getLogger(AccountController.class);
 
     private final AccountService accountService;
     private final AccountRepository accountRepository;

@@ -3,6 +3,8 @@ package com.project.home24.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
+
 public class Entity {
 
     @Id
@@ -13,10 +15,14 @@ public class Entity {
     private String description;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private String created;
+    private LocalDateTime created;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private String updated;
+    private LocalDateTime updated;
+
+    public String getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;
@@ -34,19 +40,19 @@ public class Entity {
         this.description = description;
     }
 
-    public String getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public String getUpdated() {
+    public LocalDateTime getUpdated() {
         return updated;
     }
 
-    public void setUpdated(String updated) {
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
 }

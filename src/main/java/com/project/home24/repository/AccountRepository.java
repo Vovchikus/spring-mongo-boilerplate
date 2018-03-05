@@ -4,6 +4,6 @@ import com.project.home24.entity.Account;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface AccountRepository extends MongoRepository<Account, Long> {
+public interface AccountRepository extends MongoRepository<Account, String> {
     Account getAccountByToken(String token);
 }

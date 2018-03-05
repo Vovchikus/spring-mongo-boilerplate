@@ -1,0 +1,3 @@
+spring.data.mongodb:
+   database: home24
+   uri: mongodb://mongo:27017
