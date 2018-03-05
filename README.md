@@ -2,7 +2,7 @@ Welcome to the home24 test project!
 
 ## How to run
 
-REQUIRED: docker-compose (https://docs.docker.com/compose/install/)
+REQUIRED: docker-compose (https://docs.docker.com/compose/install/), tested under 2.1 docker-compose version
 
 Application contains compiled build and dockerized image so just:
 
