@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.project.home24.controller.EntityControllerTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.943 sec - in com.project.home24.controller.EntityControllerTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.858 sec - in com.project.home24.controller.EntityControllerTest

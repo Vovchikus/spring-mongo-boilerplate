@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.project.home24.controller.AccountControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.785 sec - in com.project.home24.controller.AccountControllerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.241 sec - in com.project.home24.controller.AccountControllerTest
