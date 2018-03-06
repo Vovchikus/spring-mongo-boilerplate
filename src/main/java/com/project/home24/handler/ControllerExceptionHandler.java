@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -29,6 +30,7 @@ public class ControllerExceptionHandler {
 
     private final MessageSource messageSource;
     private final static String SERVER_ERROR_MESSAGE = "Service unavailable, we are fixing it. Please try again later";
+    private final static String DUPLICATE_MAIL_ERROR_MESSAGE = "Duplicates are not allowed here, change e-mail";
 
     @Autowired
     public ControllerExceptionHandler(MessageSource messageSource) {
@@ -67,6 +69,22 @@ public class ControllerExceptionHandler {
     public ErrorResponse handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
         log.info(ex.getMessage());
         return new ErrorResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler({DuplicateKeyException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponse handleDuplicateEmail(DuplicateKeyException ex) {
+        log.info(ex.getMessage());
+        return new ErrorResponse(DUPLICATE_MAIL_ERROR_MESSAGE);
+    }
+
+    @ExceptionHandler({Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorResponse handleServerError(Exception ex) {
+        log.error(ex.getMessage());
+        return new ErrorResponse(SERVER_ERROR_MESSAGE);
     }
 
     private ValidationError processFieldErrors(List<FieldError> fieldErrors) {
