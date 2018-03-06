@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,7 +33,8 @@ public class ControllerExceptionHandler {
     private final MessageSource messageSource;
     private final static String SERVER_ERROR_MESSAGE = "Service unavailable, we are fixing it. Please try again later";
     private final static String DUPLICATE_MAIL_ERROR_MESSAGE = "Duplicates are not allowed here, change e-mail";
-    private final static String REQUEST_BODY_EMPTY_ERROR = "Request body should not be empty";
+    private final static String REQUEST_BODY_EMPTY_ERROR_MESSAGE = "Request body should not be empty";
+    private final static String UNSUPPORTED_MEDIA_TYPE_MESSAGE = "Supporting only JSON media type";
 
     @Autowired
     public ControllerExceptionHandler(MessageSource messageSource) {
@@ -86,7 +88,15 @@ public class ControllerExceptionHandler {
     @ResponseBody
     public ErrorResponse handleEmptyRequestBody(HttpMessageNotReadableException ex) {
         log.info(ex.getMessage());
-        return new ErrorResponse(REQUEST_BODY_EMPTY_ERROR);
+        return new ErrorResponse(REQUEST_BODY_EMPTY_ERROR_MESSAGE);
+    }
+
+    @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
+    @ResponseStatus(value = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    @ResponseBody
+    public ErrorResponse handleUnsupportedMediaType(HttpMediaTypeNotSupportedException ex) {
+        log.info(ex.getMessage());
+        return new ErrorResponse(UNSUPPORTED_MEDIA_TYPE_MESSAGE);
     }
 
     @ExceptionHandler({Exception.class})

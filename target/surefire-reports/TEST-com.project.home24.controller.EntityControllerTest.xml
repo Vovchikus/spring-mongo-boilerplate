@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.project.home24.controller.EntityControllerTest" time="0.321" tests="8" errors="0" skipped="0" failures="0">
+<testsuite name="com.project.home24.controller.EntityControllerTest" time="0.174" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/jre/lib"/>
@@ -63,12 +63,12 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="create" classname="com.project.home24.controller.EntityControllerTest" time="0.138"/>
-  <testcase name="deleteOneSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.032"/>
-  <testcase name="updateOneSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.022"/>
-  <testcase name="updateOneNotFound" classname="com.project.home24.controller.EntityControllerTest" time="0.02"/>
-  <testcase name="getOneNotFound" classname="com.project.home24.controller.EntityControllerTest" time="0.033"/>
-  <testcase name="deleteOneNotFound" classname="com.project.home24.controller.EntityControllerTest" time="0.016"/>
-  <testcase name="getAllSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.042"/>
-  <testcase name="getOneSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.018"/>
+  <testcase name="create" classname="com.project.home24.controller.EntityControllerTest" time="0.072"/>
+  <testcase name="deleteOneSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.007"/>
+  <testcase name="updateOneSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.015"/>
+  <testcase name="updateOneNotFound" classname="com.project.home24.controller.EntityControllerTest" time="0.017"/>
+  <testcase name="getOneNotFound" classname="com.project.home24.controller.EntityControllerTest" time="0.008"/>
+  <testcase name="deleteOneNotFound" classname="com.project.home24.controller.EntityControllerTest" time="0.012"/>
+  <testcase name="getAllSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.028"/>
+  <testcase name="getOneSuccessful" classname="com.project.home24.controller.EntityControllerTest" time="0.015"/>
 </testsuite>
