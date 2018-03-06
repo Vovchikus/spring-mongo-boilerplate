@@ -15,8 +15,8 @@ services:
     links:
       - mongo
 
-  home24:
-    image: vovchikus/home24
+  project-home24:
+    image: home24/home24
     ports:
     - 8080:8080
     links:

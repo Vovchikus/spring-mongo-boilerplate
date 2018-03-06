@@ -11,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -31,6 +32,7 @@ public class ControllerExceptionHandler {
     private final MessageSource messageSource;
     private final static String SERVER_ERROR_MESSAGE = "Service unavailable, we are fixing it. Please try again later";
     private final static String DUPLICATE_MAIL_ERROR_MESSAGE = "Duplicates are not allowed here, change e-mail";
+    private final static String REQUEST_BODY_EMPTY_ERROR = "Request body should not be empty";
 
     @Autowired
     public ControllerExceptionHandler(MessageSource messageSource) {
@@ -77,6 +79,14 @@ public class ControllerExceptionHandler {
     public ErrorResponse handleDuplicateEmail(DuplicateKeyException ex) {
         log.info(ex.getMessage());
         return new ErrorResponse(DUPLICATE_MAIL_ERROR_MESSAGE);
+    }
+
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponse handleEmptyRequestBody(HttpMessageNotReadableException ex) {
+        log.info(ex.getMessage());
+        return new ErrorResponse(REQUEST_BODY_EMPTY_ERROR);
     }
 
     @ExceptionHandler({Exception.class})
