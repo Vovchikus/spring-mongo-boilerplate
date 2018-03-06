@@ -1,6 +1,5 @@
 package com.project.home24.handler;
 
-import com.project.home24.controller.AccountController;
 import com.project.home24.dto.error.ErrorResponse;
 import com.project.home24.dto.error.ValidationError;
 import com.project.home24.exception.AccountNotFoundException;
@@ -13,6 +12,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -57,6 +57,14 @@ public class ControllerExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorResponse handleAccountNotFoundException(AccountNotFoundException ex) {
+        log.info(ex.getMessage());
+        return new ErrorResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
+    @ResponseBody
+    public ErrorResponse handleMethodNotSupported(AccountNotFoundException ex) {
         log.info(ex.getMessage());
         return new ErrorResponse(ex.getMessage());
     }
