@@ -64,17 +64,9 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
     @ResponseBody
-    public ErrorResponse handleMethodNotSupported(AccountNotFoundException ex) {
+    public ErrorResponse handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
         log.info(ex.getMessage());
         return new ErrorResponse(ex.getMessage());
-    }
-
-    @ExceptionHandler({Exception.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public ErrorResponse handleServerError(Exception ex) {
-        log.error(ex.getMessage());
-        return new ErrorResponse(SERVER_ERROR_MESSAGE);
     }
 
     private ValidationError processFieldErrors(List<FieldError> fieldErrors) {
