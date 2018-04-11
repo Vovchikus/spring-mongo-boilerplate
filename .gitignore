@@ -13,6 +13,7 @@ hs_err_pid*
 build
 out
 classes/*
+target/*
 
 # Local config
 application-local.yml
