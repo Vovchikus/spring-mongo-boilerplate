@@ -10,4 +10,4 @@ in the project root
 
 ## Documentation
 
-* https://github.com/Vovchikus/home24/wiki/API-documentation
+* https://github.com/Vovchikus/spring-mongo-boilerplate/wiki/API-documentation
