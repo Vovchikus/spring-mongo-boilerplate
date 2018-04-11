@@ -1,3 +1,0 @@
-spring.data.mongodb:
-   database: spring-mongo-boilerplate
-   uri: mongodb://mongo:27017
