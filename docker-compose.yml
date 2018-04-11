@@ -15,8 +15,8 @@ services:
     links:
       - mongo
 
-  home24:
-    image: vovchikus/home24
+  spring-mongo-boilerplate:
+    image: vovchikus/spring-mongo-boilerplate
     ports:
     - 8080:8080
     links:

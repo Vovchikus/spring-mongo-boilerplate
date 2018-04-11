@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>project</groupId>
-    <artifactId>home24</artifactId>
+    <artifactId>spring-mongo-boilerplate</artifactId>
     <version>1.0</version>
 
     <parent>
@@ -14,12 +14,12 @@
         <version>1.5.2.RELEASE</version>
     </parent>
 
-    <name>home24-app</name>
+    <name>spring-mongo-boilerplate-app</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <docker.image.prefix>home24</docker.image.prefix>
+        <docker.image.prefix>spring-mongo-boilerplate</docker.image.prefix>
     </properties>
 
     <dependencies>

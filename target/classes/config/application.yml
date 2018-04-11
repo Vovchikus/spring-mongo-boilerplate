@@ -1,3 +1,3 @@
 spring.data.mongodb:
-   database: home24
+   database: spring-mongo-boilerplate
    uri: mongodb://mongo:27017
