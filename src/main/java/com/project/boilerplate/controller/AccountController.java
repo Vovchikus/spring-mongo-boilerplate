@@ -26,7 +26,7 @@ public class AccountController {
         this.accountRepository = accountRepository;
     }
 
-    @PostMapping(value = "/token")
+    @PostMapping(value = "/login")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountResponse create(@Valid @RequestBody CreateAccountRequest createAccountRequest)
             throws NoSuchAlgorithmException {
@@ -41,8 +41,8 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public AccountResponse getAccount(@Valid @RequestHeader(value = "X-Auth-Token") String token)
             throws AccountNotFoundException {
-        Optional<Account> opt = Optional.ofNullable(accountRepository.getAccountByToken(token));
-        Account account = opt.orElseThrow(() -> new AccountNotFoundException(token));
+        Account account = Optional.ofNullable(accountRepository.getAccountByToken(token))
+                .orElseThrow(() -> new AccountNotFoundException(token));
         AccountResponse response = new AccountResponse();
         response.setEmail(account.getEmail());
         response.setToken(account.getToken());

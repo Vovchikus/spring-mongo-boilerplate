@@ -4,12 +4,12 @@ import com.project.boilerplate.dto.entity.EntityRequest;
 import com.project.boilerplate.entity.Entity;
 import com.project.boilerplate.exception.EntityNotFoundException;
 import com.project.boilerplate.repository.EntityRepository;
+import com.project.boilerplate.service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,27 +18,24 @@ import java.util.Optional;
 public class EntityController {
 
     private final EntityRepository entityRepository;
+    private final EntityService entityService;
 
     @Autowired
-    public EntityController(EntityRepository entityRepository) {
+    public EntityController(EntityRepository entityRepository, EntityService entityService) {
         this.entityRepository = entityRepository;
+        this.entityService = entityService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Entity create(@Valid @RequestBody EntityRequest entityRequest) {
-        Entity entity = new Entity();
-        entity.setTitle(entityRequest.getTitle());
-        entity.setDescription(entityRequest.getDescription());
-        entity.setCreated(LocalDateTime.now());
-        return entityRepository.insert(entity);
+        return entityService.create(entityRequest);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public Entity getOne(@PathVariable("id") String id) throws EntityNotFoundException {
-        return Optional.ofNullable(entityRepository.findOne(id))
-                .orElseThrow(() -> new EntityNotFoundException(id));
+        return Optional.ofNullable(entityRepository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(id));
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -51,12 +48,8 @@ public class EntityController {
     @PutMapping("/{id}")
     public Entity updateOne(@Valid @RequestBody EntityRequest entityRequest, @PathVariable("id") String id)
             throws EntityNotFoundException {
-        Entity entity = Optional.ofNullable(entityRepository.findOne(id))
-                .orElseThrow(() -> new EntityNotFoundException(id));
-        entity.setDescription(entityRequest.getDescription());
-        entity.setTitle(entityRequest.getTitle());
-        entity.setUpdated(LocalDateTime.now());
-        entityRepository.save(entity);
+        Entity entity = Optional.ofNullable(entityRepository.findOne(id)).orElseThrow(() -> new EntityNotFoundException(id));
+        entityRepository.save(entityService.update(entity, entityRequest));
         return entity;
     }
 
